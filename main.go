@@ -19,17 +19,11 @@ func main() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
-	// Initialize database connection
 	initDB()
 
-	// Initialize Gin router
 	router := gin.Default()
-
-	// Set up routes
 	setupRoutes(router)
 
-	// Start the server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -47,7 +41,6 @@ func initDB() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// Auto-migrate the schema
 	err = db.AutoMigrate(
 		&models.User{},
 		&models.Category{},
@@ -98,6 +91,19 @@ func setupRoutes(router *gin.Engine) {
 		})
 		authorized.DELETE("/expenses/:id", func(c *gin.Context) {
 			controllers.DeleteExpense(c, db)
+		})
+		// INCOMES
+		authorized.POST("/incomes", func(c *gin.Context) {
+			controllers.CreateIncome(c, db)
+		})
+		authorized.GET("/incomes", func(c *gin.Context) {
+			controllers.GetIncomes(c, db)
+		})
+		authorized.PUT("/incomes/:id", func(c *gin.Context) {
+			controllers.UpdateIncome(c, db)
+		})
+		authorized.DELETE("/incomes/:id", func(c *gin.Context) {
+			controllers.DeleteIncome(c, db)
 		})
 	}
 }

@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"budget-go/models"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
@@ -33,7 +32,6 @@ func CreateExpense(c *gin.Context, db *gorm.DB) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	fmt.Println(payload.Date)
 	expenseTime, err := time.Parse(`2006-01-02`, payload.Date)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
