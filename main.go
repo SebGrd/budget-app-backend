@@ -73,10 +73,10 @@ func setupRoutes(router *gin.Engine) {
 		authorized.GET("/profile", func(c *gin.Context) {
 			controllers.Profile(c, db)
 		})
+		// CATEGORIES
 		authorized.POST("/categories", func(c *gin.Context) {
 			controllers.CreateCategory(c, db)
 		})
-
 		authorized.GET("/categories", func(c *gin.Context) {
 			controllers.GetCategories(c, db)
 		})
@@ -85,6 +85,19 @@ func setupRoutes(router *gin.Engine) {
 		})
 		authorized.DELETE("/categories/:id", func(c *gin.Context) {
 			controllers.DeleteCategory(c, db)
+		})
+		// EXPENSES
+		authorized.POST("/expenses", func(c *gin.Context) {
+			controllers.CreateExpense(c, db)
+		})
+		authorized.GET("/expenses", func(c *gin.Context) {
+			controllers.GetExpenses(c, db)
+		})
+		authorized.PUT("/expenses/:id", func(c *gin.Context) {
+			controllers.UpdateExpense(c, db)
+		})
+		authorized.DELETE("/expenses/:id", func(c *gin.Context) {
+			controllers.DeleteExpense(c, db)
 		})
 	}
 }
