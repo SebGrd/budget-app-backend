@@ -12,7 +12,7 @@ type Income struct {
 	UserID    uint       `json:"userId" gorm:"not null"`
 	Source    string     `json:"source" gorm:"not null"`
 	Amount    float64    `json:"amount" gorm:"not null"`
-	Date      time.Time  `json:"date" gorm:"not null"`
+	Date      string     `json:"date" gorm:"not null"`
 	Recurring bool       `json:"recurring" gorm:"default:false"`
 	Note      string     `json:"note"`
 }

@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 func GetExpenses(c *gin.Context, db *gorm.DB) {
@@ -32,15 +31,11 @@ func CreateExpense(c *gin.Context, db *gorm.DB) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	expenseTime, err := time.Parse(`2006-01-02`, payload.Date)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+
 	expense := models.Expense{
 		CategoryID: payload.CategoryID,
 		Amount:     payload.Amount,
-		Date:       expenseTime,
+		Date:       payload.Date,
 		Note:       payload.Note,
 		Recurring:  payload.Recurring,
 		UserID:     userID,

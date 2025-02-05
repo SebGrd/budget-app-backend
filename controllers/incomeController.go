@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 	"net/http"
 	"strconv"
-	"time"
 )
 
 func GetIncomes(c *gin.Context, db *gorm.DB) {
@@ -32,14 +31,10 @@ func CreateIncome(c *gin.Context, db *gorm.DB) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	incomeTime, err := time.Parse(`2006-01-02`, payload.Date)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+
 	income := models.Income{
 		Amount:    payload.Amount,
-		Date:      incomeTime,
+		Date:      payload.Date,
 		Note:      payload.Note,
 		Recurring: payload.Recurring,
 		Source:    payload.Source,
