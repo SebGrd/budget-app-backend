@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"budget-go/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"net/http"
@@ -13,6 +14,7 @@ func GetIncomes(c *gin.Context, db *gorm.DB) {
 	var incomes []models.Income
 	if err := db.Where("user_id = ?", userID).Find(&incomes).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch incomes"})
+		fmt.Println(err)
 		return
 	}
 	c.JSON(http.StatusOK, incomes)
